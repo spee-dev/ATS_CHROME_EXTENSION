@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "AI Job Assistant",
+  "version": "1.0",
+  "description": "AI powered job assistant popup",
+  
+  "permissions": ["scripting", "activeTab"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sidebar/build/index.html",
+        "sidebar/build/static/js/*",
+        "sidebar/build/static/css/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
