@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/resume")
+@RequestMapping("/api") // Changed to /api to allow /api/chat directly
 @CrossOrigin // optional (global config already present)
 public class ResumeController {
 
@@ -37,5 +40,16 @@ public class ResumeController {
 
         String result = analysisService.analyze(extractedText, jobDescription);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/chat")
+    public ResponseEntity<?> chatWithAi(@RequestBody List<Map<String, String>> messages) {
+        try {
+            String aiResponse = analysisService.chat(messages);
+            return ResponseEntity.ok(aiResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error processing chat message: " + e.getMessage());
+        }
     }
 }
